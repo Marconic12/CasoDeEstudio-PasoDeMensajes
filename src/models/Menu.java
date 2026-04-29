@@ -4,8 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Menu {
-    private Map<String, Producto> menu; // atributo de instancia
-
+    private Map<String, Producto> menu; 
     public Menu() {
         menu = new HashMap<>();
         menu.put("Hamburguesa", new Producto("Hamburguesa", 5.0));
@@ -23,7 +22,7 @@ public class Menu {
         }
     }
 
-    // Método para validar si existe un producto
+    
     public Producto obtenerProducto(String nombre) {
         return menu.get(nombre);
     }
