@@ -1,3 +1,5 @@
+package models;
+
 import java.util.ArrayList;
 
 public class Pedido
@@ -16,6 +18,15 @@ public class Pedido
     {
         this.estado = estado;
         productos = new ArrayList<Producto>();
+    }
+
+
+    public double calcularTotal() {
+        double total = 0;
+        for (Producto p : productos) {
+            total += p.getPrecio();
+        }
+        return total;
     }
 
     public void agregarProducto(Producto p)
