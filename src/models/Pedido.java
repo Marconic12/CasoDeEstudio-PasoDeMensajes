@@ -20,6 +20,15 @@ public class Pedido
         productos = new ArrayList<Producto>();
     }
 
+
+    public double calcularTotal() {
+        double total = 0;
+        for (Producto p : productos) {
+            total += p.getPrecio();
+        }
+        return total;
+    }
+
     public void agregarProducto(Producto p)
     {
         productos.add(p);

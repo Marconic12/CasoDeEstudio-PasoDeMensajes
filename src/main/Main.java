@@ -1,14 +1,17 @@
 package main;
 
-import java.util.Scanner;
-import models.*;
+import models.Cajero;
+import models.Cliente;
+import models.Menu;
 import services.Cocina;
+
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        // Pedir nombre del cliente
+
         System.out.print("Ingrese su nombre: ");
         String nombreCliente = sc.nextLine();
         Cliente cliente = new Cliente(nombreCliente);
@@ -17,32 +20,12 @@ public class Main {
         Cocina cocina = new Cocina();
         Menu menu = new Menu();
 
-        // Mostrar menú
+
         menu.mostrarMenu();
 
-        // Crear pedido
-        Pedido pedido = cajero.recibirPedido();
 
-        String respuesta;
-        do {
-            System.out.print("\nIngrese el nombre del producto: ");
-            String nombreProducto = sc.nextLine();
+        cliente.hacerPedido(cajero, cocina, menu);
 
-            Producto elegido = menu.obtenerProducto(nombreProducto);
-            if (elegido != null) {
-                pedido.agregarProducto(elegido);
-                System.out.println("Producto agregado: " + elegido.getNombre());
-            } else {
-                System.out.println("Ese producto no existe en el menú.");
-            }
-
-            System.out.print("¿Desea agregar más productos? (Y/N): ");
-            respuesta = sc.nextLine();
-        } while (respuesta.equalsIgnoreCase("Y"));
-
-        // Enviar pedido a cocina
-        cajero.enviarACocina(pedido, cocina);
-        cajero.notificarCliente();
 
         sc.close();
     }

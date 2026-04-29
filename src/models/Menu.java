@@ -22,8 +22,14 @@ public class Menu {
         }
     }
 
-    
+
     public Producto obtenerProducto(String nombre) {
-        return menu.get(nombre);
+        for (Map.Entry<String, Producto> entry : menu.entrySet()) {
+            if (entry.getKey().equalsIgnoreCase(nombre)) {
+                return entry.getValue();
+            }
+        }
+        return null;
     }
+
 }

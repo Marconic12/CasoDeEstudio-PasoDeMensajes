@@ -1,45 +1,48 @@
 package models;
 
 import services.Cocina;
-
 import java.util.Scanner;
 
-public class Cliente
-{
+public class Cliente {
     private String nombre;
 
-
-    public Cliente()
-    {
-
-    }
-
-    public Cliente(String nombre)
-    {
+    public Cliente(String nombre) {
         this.nombre = nombre;
     }
 
+    public void hacerPedido(Cajero cajero, Cocina cocina, Menu menu) {
+        System.out.println(nombre + " está haciendo un pedido");
 
-    public void hacerPedido(Cajero cajero, Cocina cocina) {
-
-        System.out.println(nombre + " esta haciendo un pedido");
-        System.out.println("Que producto desea: ");
         Pedido pedido = cajero.recibirPedido();
+        Scanner input = new Scanner(System.in);
         String respuesta;
-        do {
-            Scanner input = new Scanner(System.in);
-            System.out.println("Ingrese el nombre del producto: ");
-            String nombreProducto = input.nextLine();
-            System.out.println("Ingrese la cantidad a pagar: ");
-            double precio = input.nextDouble();
-            input.nextLine();
-            Producto p = new Producto(nombreProducto, precio);
-            pedido.agregarProducto(p);
 
-            System.out.println("Desea agregar mas productos? (Y/N)");
+        do {
+            System.out.print("Ingrese el nombre del producto: ");
+            String nombreProducto = input.nextLine();
+
+
+            Producto elegido = menu.obtenerProducto(nombreProducto);
+            if (elegido != null) {
+                pedido.agregarProducto(elegido);
+                System.out.println("Producto agregado: " + elegido.getNombre());
+            } else {
+                System.out.println("Ese producto no existe en el menú.");
+            }
+
+            System.out.print("¿Desea agregar más productos? (Y/N): ");
             respuesta = input.nextLine();
-        }
-        while (respuesta.equalsIgnoreCase("Y"));
+
+            while (!respuesta.equalsIgnoreCase("Y") && !respuesta.equalsIgnoreCase("N"))
+            {
+                System.out.print("Entrada inválida. Escriba Y o N: ");
+                respuesta = input.nextLine();
+            }
+        } while (respuesta.equalsIgnoreCase("Y"));
+
+        // Enviar pedido a cocina
+        cajero.enviarACocina(pedido, cocina);
+        cajero.notificarCliente();
+        System.out.println("El total de su pedido es: C$" + pedido.calcularTotal());
     }
 }
-
