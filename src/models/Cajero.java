@@ -1,3 +1,7 @@
+package models;
+
+import services.Cocina;
+
 public class Cajero
 {
     private String nombre;
@@ -25,7 +29,7 @@ public class Cajero
 
     public void notificarCliente()
     {
-
+        System.out.println("Su pedido ya esta listo");
     }
 }
 
